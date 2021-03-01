@@ -1,0 +1,36 @@
+- hosts: all
+  tasks:
+  - name: "Installing Httpd Software"
+    package: 
+     name: "httpd"
+     state: present
+  - name: "Deploying Website"
+    copy: 
+     content: "<h1> New Http Authentication </H1>"
+     dest: "/var/www/html/index.html"
+  - name: "Replacing AuthConfig in httpd.conf file"
+    replace: 
+     path: "/etc/httpd/conf/httpd.conf"
+     regexp: AllowOverride None
+     replace: AllowOverride AuthConfig
+  - name: ""
+    copy:
+     dest: "/var/www/html/.htaccess"
+     src: ".htaccess" 
+  - name: "Installing Python For Pip"
+    package: 
+     name: "python36"
+  - name: "Module passlib will help to create authentication file"  
+    pip:
+     name: "passlib"
+  - name: "Creating Authenticate"
+    htpasswd:
+     path: "/etc/www.passwd"
+     name: "ashish"
+     password: "gta00789"
+  - name: "Strarting the Services"
+    service:
+     name: "httpd" 
+     state: started
+ 
+

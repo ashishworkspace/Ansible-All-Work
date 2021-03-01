@@ -1,0 +1,2 @@
+port_No: 8080
+document_Root: "/var/www/NewDir"
